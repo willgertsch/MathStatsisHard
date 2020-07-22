@@ -1,0 +1,153 @@
+---
+title: Expected Value and Variance for Negative Binomial
+author: Will Gertsch
+date: '2020-07-21'
+slug: expected-value-and-variance-for-negative-binomial
+categories: []
+tags:
+  - expectation
+  - variance
+  - discrete
+  - negative-binomial
+description: ''
+keywords: []
+math: yes
+---
+
+The negative binomial distribution models the number of failures until $r$ successes given success probability $p$. Its PMF is
+$$
+P(X = k|r,p) = {k + r -1\choose k}(1-p)^kp^r
+$$
+
+for $k = 0, 1, \dots$, $ r > 0$, and $0 < p < 1$.
+
+
+There are two ways to compute the expected value and variance. The first is the direct method and the second uses the fact that the negative binomial distribution is part of the exponential family if $r$ is given.
+
+## Direct method
+### Expected value
+This method proceeds directly from the definition of expectation.
+
+$$
+EX = \sum_{k=0}^\infty k {k + r -1\choose k}(1-p)^kp^r
+$$
+First note that the $k = 0$ term will be zero, so we drop that term from the summation.
+$$
+ = \sum_{k=1}^\infty k {k + r -1\choose k}(1-p)^kp^r
+$$
+Next, bring k inside the ${k + r -1\choose k}$. This will cause damage, but will also tell us where to go next.
+
+$$
+ = \sum_{k=1}^\infty \frac{(k+r-1)!}{(k-1)! (r-1)!} (1-p)^kp^r
+$$
+That $k-1$ is now our guiding light. If we can manufacture a negative binomial PMF inside the summation in terms of $k-1$, it will sum to 1 and we will be left with terms that we can pull out.
+
+Our first step is to try to turn the fraction into ${k + r -1\choose k-1}$.
+$$
+ = \sum_{k=1}^\infty \frac{(k-1+r+1-1)!}{(k-1)! (r-1)!} (1-p)^kp^r
+$$
+The second term on the bottom needs to be $k-1 + r + 1 - 1 - (k-1) = r$, so multiply by $\frac{r}{r}$.
+$$
+ = \sum_{k=1}^\infty \frac{r}{r} \frac{(k-1+r+1-1)!}{(k-1)! (r-1)!} (1-p)^kp^r = r\sum_{k=1}^\infty \frac{(k+r-1)!}{(k-1)! r!} (1-p)^kp^r 
+$$
+$$
+= r\sum_{k=1}^\infty  {k + r -1\choose k-1}(1-p)^kp^r
+$$
+Our goal is to make a negative binomial distribution in terms of $k-1$. We can make that process easier with the substitution $z = k-1$.
+$$
+= r\sum^\infty_{z = 0} { z + 1 +r - 1\choose z}p^r(1-p)^{z+1}
+$$
+Now we need to manipulate the $p$ and the $(1-p)$ terms to match the first term.
+
+$$
+= \frac{r(1-p)}{p}\sum^\infty_{z = 0} { z + 1 +r - 1\choose z}p^{r+1}(1-p)^{z}
+$$
+The summation is now over a negative binomial PMF with parameters $r+1$, $p$. Therefore
+$$
+EX = \frac{r(1-p)}{p}
+$$
+
+## Variance
+Finding the variance requires a different method than for the expectation. Instead of computing $EX^2$ and using it to compute $\operatorname{Var}X = EX^2 - (EX)^2$, it is easier to compute $E\left[X(X-1)\right]$ use it to find $\operatorname{Var}X = EX^2 -EX + EX- (EX)^2$
+$$
+E\left[X(X-1)\right] = \sum_{k=0}^\infty k(k-1) {k + r -1\choose k}(1-p)^kp^r
+$$
+Like before, we first consider the damage done by $k(k-1)$.
+
+$$
+= \sum_{k=0}^\infty k(k-1) \frac{(k+r-1)!}{(k-2)!(r-1)!}(1-p)^kp^r
+$$
+
+Similarly, we can modify the $r$ component to get to ${k+r-1 \choose k-2}$
+
+$$
+=r(r+1)\sum_{k=0}^\infty {k+r-1 \choose k-2}(1-p)^kp^r
+$$
+
+Now let $z = k-2$.
+
+$$
+ = r(r+1)\sum_{k=0}^\infty {z+r+2-1 \choose k}(1-p)^{z + 2}p^r
+$$
+
+Pull out the constant terms as before and we end up with
+$$
+E\left[X(X-1)\right] = \frac{r(r+1)(1-p)^2}{p^2}
+$$
+
+Thus the variance is
+$$
+\operatorname{Var}X = EX^2 -EX + EX- (EX)^2 = E\left[X(X-1)\right]+ EX- (EX)^2
+$$
+
+$$
+= \frac{r(r+1)(1-p)^2}{p^2} + \frac{r(1-p)}{p} - \frac{r^2(1-p)^2}{p^2} = \frac{r(1-p)}{p^2}
+$$
+
+## Exponential family method
+The direct method is long, tedious, and requires a number of tricks that are difficult to come up with the first time through. Being familiar with the exponential family of distributions can help you skip these calculations.
+
+A pdf/pmf of a distribution in the exponential family can be put into *canonical form* as follows.
+$$
+f(y | \theta, \phi) = h(y, \phi)\operatorname{exp}\left[ \frac{y\theta - A(\theta)}{d(\phi)}\right]
+$$
+
+where $\theta$ is the *canonical parameter* and $\phi$ is the *dispersion parameter*.
+
+Canonical form is most often used in GLMs to find the canonical link function, but there are a few other nice features. One of these is that there are easy formulas for expectation and variance.
+
+$$
+EX = \frac{\partial}{\partial\theta}A(\theta)
+$$
+$$
+\operatorname{Var}(X) = \frac{\partial^2}{\partial\theta^2}A(\theta)
+$$
+Therefore, if we want to find expectation and variance, we can put the pdf/pmf into canonical form and then take derivatives of $A(\theta)$.
+
+Given $r$, the negative binomial distribution is part of the exponential family and therefore can be put into canonical form.
+$$
+P(X = k|r,p) = {k + r -1\choose k}(1-p)^kp^r  
+$$
+
+$$
+ = \operatorname{exp}\left[ x\log(1-p) + r\log p + \log {k + r -1\choose k}\right]
+$$
+
+$$
+= {k + r -1\choose k} \operatorname{exp} \left[ x\log(1-p) +r\log p \right]
+$$
+
+Therefore we have $\theta = \log(1-p)$. We also have $A(\theta)$, but it is not in terms of $\theta$, which makes taking derivatives difficult. We must find a function $A$ such that $A(\log(1-p)) = -r\log p$. 
+
+Playing around with applying various operations to $\log(1-p)$, we find that the function is $A(\theta) = -r \log \left( 1- e ^\theta \right)$
+
+Now we can take first and second derivatives to get
+$$
+EX = \frac{\partial}{\partial\theta}A(\theta) = \frac{re^\theta}{1-e^\theta} = \frac{r(1-p)}{p}
+$$
+
+$$
+\operatorname{Var}(X) = \frac{\partial^2}{\partial\theta^2}A(\theta) = \frac{re^\theta}{(1-e^\theta)^2} = \frac{r(1-p)}{p^2}
+$$
+
+Note that the last step was achieved with the substitution $\theta = \log(1-p)$.

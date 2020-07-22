@@ -1,0 +1,30 @@
+{{ define "styles" }}
+    {{ $.Scratch.Set "style_opts" (dict "src" "scss/pages/about.scss" "dest" "css/about.css") }}
+{{ end }}
+
+{{ define "main" }}
+
+<div class="splash-container">
+  <div class="splash">
+    
+    <h1>{{ .Params.heading }}<span class="fancy">.</span></h1>
+    {{ if isset .Params "handle" }}
+    <!--<span class="handle">@{{ .Params.handle }}</span>-->
+    {{ end }}
+    <h2>
+      {{ .Params.subheading }}
+    </h2>
+    <!-- Replace MEEEEE -->
+    <p>
+      This blog is a resource for beginning graduate students in statistics related fields.
+    </p>
+    <p>
+     The math behind statistics can be difficult if you don't know the common "tricks of the trade." My posts mostly consist of derivations and things I wish I had known before starting graduate school.
+    </p>
+    
+
+    {{ partial "social-icons.html" .}}
+  </div>
+</div>
+
+{{ end }}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on codex</title>
+    <link>/blog/</link>
+    <description>Recent content in Blogs on codex</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Tue, 21 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Expected Value and Variance for Negative Binomial</title>
+      <link>/blog/expected-value-and-variance-for-negative-binomial/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/expected-value-and-variance-for-negative-binomial/</guid>
+      <description>The negative binomial distribution models the number of failures until \(r\) successes given success probability \(p\). Its PMF is \[ P(X = k|r,p) = {k + r -1\choose k}(1-p)^kp^r \]
+for \(k = 0, 1, \dots\), $ r &amp;gt; 0$, and \(0 &amp;lt; p &amp;lt; 1\).
+There are two ways to compute the expected value and variance. The first is the direct method and the second uses the fact that the negative binomial distribution is part of the exponential family if \(r\) is given.</description>
+    </item>
+    
+  </channel>
+</rss>

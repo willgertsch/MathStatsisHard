@@ -1,0 +1,134 @@
+---
+title: Expected Value and Variance for Negative Binomial
+author: Will Gertsch
+date: '2020-07-21'
+slug: expected-value-and-variance-for-negative-binomial
+categories: []
+tags:
+  - expectation
+  - variance
+  - discrete
+  - negative-binomial
+description: ''
+keywords: []
+math: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>The negative binomial distribution models the number of failures until <span class="math inline">\(r\)</span> successes given success probability <span class="math inline">\(p\)</span>. Its PMF is
+<span class="math display">\[
+P(X = k|r,p) = {k + r -1\choose k}(1-p)^kp^r
+\]</span></p>
+<p>for <span class="math inline">\(k = 0, 1, \dots\)</span>, $ r &gt; 0$, and <span class="math inline">\(0 &lt; p &lt; 1\)</span>.</p>
+<p>There are two ways to compute the expected value and variance. The first is the direct method and the second uses the fact that the negative binomial distribution is part of the exponential family if <span class="math inline">\(r\)</span> is given.</p>
+<div id="direct-method" class="section level2">
+<h2>Direct method</h2>
+<div id="expected-value" class="section level3">
+<h3>Expected value</h3>
+<p>This method proceeds directly from the definition of expectation.</p>
+<p><span class="math display">\[
+EX = \sum_{k=0}^\infty k {k + r -1\choose k}(1-p)^kp^r
+\]</span>
+First note that the <span class="math inline">\(k = 0\)</span> term will be zero, so we drop that term from the summation.
+<span class="math display">\[
+ = \sum_{k=1}^\infty k {k + r -1\choose k}(1-p)^kp^r
+\]</span>
+Next, bring k inside the <span class="math inline">\({k + r -1\choose k}\)</span>. This will cause damage, but will also tell us where to go next.</p>
+<p><span class="math display">\[
+ = \sum_{k=1}^\infty \frac{(k+r-1)!}{(k-1)! (r-1)!} (1-p)^kp^r
+\]</span>
+That <span class="math inline">\(k-1\)</span> is now our guiding light. If we can manufacture a negative binomial PMF inside the summation in terms of <span class="math inline">\(k-1\)</span>, it will sum to 1 and we will be left with terms that we can pull out.</p>
+<p>Our first step is to try to turn the fraction into <span class="math inline">\({k + r -1\choose k-1}\)</span>.
+<span class="math display">\[
+ = \sum_{k=1}^\infty \frac{(k-1+r+1-1)!}{(k-1)! (r-1)!} (1-p)^kp^r
+\]</span>
+The second term on the bottom needs to be <span class="math inline">\(k-1 + r + 1 - 1 - (k-1) = r\)</span>, so multiply by <span class="math inline">\(\frac{r}{r}\)</span>.
+<span class="math display">\[
+ = \sum_{k=1}^\infty \frac{r}{r} \frac{(k-1+r+1-1)!}{(k-1)! (r-1)!} (1-p)^kp^r = r\sum_{k=1}^\infty \frac{(k+r-1)!}{(k-1)! r!} (1-p)^kp^r 
+\]</span>
+<span class="math display">\[
+= r\sum_{k=1}^\infty  {k + r -1\choose k-1}(1-p)^kp^r
+\]</span>
+Our goal is to make a negative binomial distribution in terms of <span class="math inline">\(k-1\)</span>. We can make that process easier with the substitution <span class="math inline">\(z = k-1\)</span>.
+<span class="math display">\[
+= r\sum^\infty_{z = 0} { z + 1 +r - 1\choose z}p^r(1-p)^{z+1}
+\]</span>
+Now we need to manipulate the <span class="math inline">\(p\)</span> and the <span class="math inline">\((1-p)\)</span> terms to match the first term.</p>
+<p><span class="math display">\[
+= \frac{r(1-p)}{p}\sum^\infty_{z = 0} { z + 1 +r - 1\choose z}p^{r+1}(1-p)^{z}
+\]</span>
+The summation is now over a negative binomial PMF with parameters <span class="math inline">\(r+1\)</span>, <span class="math inline">\(p\)</span>. Therefore
+<span class="math display">\[
+EX = \frac{r(1-p)}{p}
+\]</span></p>
+</div>
+</div>
+<div id="variance" class="section level2">
+<h2>Variance</h2>
+<p>Finding the variance requires a different method than for the expectation. Instead of computing <span class="math inline">\(EX^2\)</span> and using it to compute <span class="math inline">\(\operatorname{Var}X = EX^2 - (EX)^2\)</span>, it is easier to compute <span class="math inline">\(E\left[X(X-1)\right]\)</span> use it to find <span class="math inline">\(\operatorname{Var}X = EX^2 -EX + EX- (EX)^2\)</span>
+<span class="math display">\[
+E\left[X(X-1)\right] = \sum_{k=0}^\infty k(k-1) {k + r -1\choose k}(1-p)^kp^r
+\]</span>
+Like before, we first consider the damage done by <span class="math inline">\(k(k-1)\)</span>.</p>
+<p><span class="math display">\[
+= \sum_{k=0}^\infty k(k-1) \frac{(k+r-1)!}{(k-2)!(r-1)!}(1-p)^kp^r
+\]</span></p>
+<p>Similarly, we can modify the <span class="math inline">\(r\)</span> component to get to <span class="math inline">\({k+r-1 \choose k-2}\)</span></p>
+<p><span class="math display">\[
+=r(r+1)\sum_{k=0}^\infty {k+r-1 \choose k-2}(1-p)^kp^r
+\]</span></p>
+<p>Now let <span class="math inline">\(z = k-2\)</span>.</p>
+<p><span class="math display">\[
+ = r(r+1)\sum_{k=0}^\infty {z+r+2-1 \choose k}(1-p)^{z + 2}p^r
+\]</span></p>
+<p>Pull out the constant terms as before and we end up with
+<span class="math display">\[
+E\left[X(X-1)\right] = \frac{r(r+1)(1-p)^2}{p^2}
+\]</span></p>
+<p>Thus the variance is
+<span class="math display">\[
+\operatorname{Var}X = EX^2 -EX + EX- (EX)^2 = E\left[X(X-1)\right]+ EX- (EX)^2
+\]</span></p>
+<p><span class="math display">\[
+= \frac{r(r+1)(1-p)^2}{p^2} + \frac{r(1-p)}{p} - \frac{r^2(1-p)^2}{p^2} = \frac{r(1-p)}{p^2}
+\]</span></p>
+</div>
+<div id="exponential-family-method" class="section level2">
+<h2>Exponential family method</h2>
+<p>The direct method is long, tedious, and requires a number of tricks that are difficult to come up with the first time through. Being familiar with the exponential family of distributions can help you skip these calculations.</p>
+<p>A pdf/pmf of a distribution in the exponential family can be put into <em>canonical form</em> as follows.
+<span class="math display">\[
+f(y | \theta, \phi) = h(y, \phi)\operatorname{exp}\left[ \frac{y\theta - A(\theta)}{d(\phi)}\right]
+\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> is the <em>canonical parameter</em> and <span class="math inline">\(\phi\)</span> is the <em>dispersion parameter</em>.</p>
+<p>Canonical form is most often used in GLMs to find the canonical link function, but there are a few other nice features. One of these is that there are easy formulas for expectation and variance.</p>
+<p><span class="math display">\[
+EX = \frac{\partial}{\partial\theta}A(\theta)
+\]</span>
+<span class="math display">\[
+\operatorname{Var}(X) = \frac{\partial^2}{\partial\theta^2}A(\theta)
+\]</span>
+Therefore, if we want to find expectation and variance, we can put the pdf/pmf into canonical form and then take derivatives of <span class="math inline">\(A(\theta)\)</span>.</p>
+<p>Given <span class="math inline">\(r\)</span>, the negative binomial distribution is part of the exponential family and therefore can be put into canonical form.
+<span class="math display">\[
+P(X = k|r,p) = {k + r -1\choose k}(1-p)^kp^r  
+\]</span></p>
+<p><span class="math display">\[
+ = \operatorname{exp}\left[ x\log(1-p) + r\log p + \log {k + r -1\choose k}\right]
+\]</span></p>
+<p><span class="math display">\[
+= {k + r -1\choose k} \operatorname{exp} \left[ x\log(1-p) +r\log p \right]
+\]</span></p>
+<p>Therefore we have <span class="math inline">\(\theta = \log(1-p)\)</span>. We also have <span class="math inline">\(A(\theta)\)</span>, but it is not in terms of <span class="math inline">\(\theta\)</span>, which makes taking derivatives difficult. We must find a function <span class="math inline">\(A\)</span> such that <span class="math inline">\(A(\log(1-p)) = -r\log p\)</span>.</p>
+<p>Playing around with applying various operations to <span class="math inline">\(\log(1-p)\)</span>, we find that the function is <span class="math inline">\(A(\theta) = -r \log \left( 1- e ^\theta \right)\)</span></p>
+<p>Now we can take first and second derivatives to get
+<span class="math display">\[
+EX = \frac{\partial}{\partial\theta}A(\theta) = \frac{re^\theta}{1-e^\theta} = \frac{r(1-p)}{p}
+\]</span></p>
+<p><span class="math display">\[
+\operatorname{Var}(X) = \frac{\partial^2}{\partial\theta^2}A(\theta) = \frac{re^\theta}{(1-e^\theta)^2} = \frac{r(1-p)}{p^2}
+\]</span></p>
+<p>Note that the last step was achieved with the substitution <span class="math inline">\(\theta = \log(1-p)\)</span>.</p>
+</div>
