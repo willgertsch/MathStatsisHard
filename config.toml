@@ -25,7 +25,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"] # added
   # Links to your social accounts, comment/uncomment as needed. Icons will be displayed for those specified.
   # twitter = "https://twitter.com/<your handle>"
   github = "https://github.com/willgertsch"
-  # email = "mailto:<your email>"
+  email = "mailto:willgertsch+mathstatsishard@gmail.com"
   # facebook = "https://facebook.com/<your handle>"
   # gitlab = "https://gitlab.com/<your handle>"
   # instagram = "https://instagram.com/<your handle>"
@@ -35,7 +35,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"] # added
   # Titles for your icons (shown as tooltips), and also their display order.
   # Currently, these icons are supported: 
   #   "Twitter", "GitHub", "Email", "Facebook", "GitLab", "Instagram", "LinkedIn", "YouTube"
-  iconTitles = ["GitHub"]
+  iconTitles = ["GitHub", "Email"]
 
   # Metadata for Twitter cards, defaults to params.twitter
   # twitterSite = "@<your handle>"
