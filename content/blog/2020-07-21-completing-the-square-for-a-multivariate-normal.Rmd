@@ -1,0 +1,27 @@
+---
+title: Completing the Square for a Multivariate Normal
+author: Will Gertsch
+date: '2020-07-21'
+slug: completing-the-square-for-a-multivariate-normal
+categories: []
+tags:
+  - bayesian
+  - multivariate-normal
+description: ''
+keywords: []
+math: yes
+---
+
+Consider the mixed effects model
+$$
+Y | \gamma \sim N(X\beta + Z\gamma, \sigma^2 I_n)
+$$
+where
+$$
+\gamma \sim N(0_q, \Sigma)
+$$
+The posterior distribution of the random effect $\gamma | Y$ is multivariate normal. This means that the two quadratic forms in $f(Y|\gamma)f(\gamma)$ have to be combined into one. This is a difficult algebra problem which involves an analogue for completing the square for matrices.
+
+The best resource I found for the multivariate case of completing the square is this [article](https://learnbayes.org/index.php?option=com_content&view=article&id=77:completesquare&catid=83:reference&Itemid=479)
+
+I recommend working through the example and then writing out the general steps to really understand the process.

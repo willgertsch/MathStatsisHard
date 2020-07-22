@@ -8,7 +8,17 @@
   </url>
   
   <url>
+    <loc>/tags/bayesian/</loc>
+    <lastmod>2020-07-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/</loc>
+    <lastmod>2020-07-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/completing-the-square-for-a-multivariate-normal/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -24,6 +34,11 @@
   
   <url>
     <loc>/blog/expected-value-and-variance-for-negative-binomial/</loc>
+    <lastmod>2020-07-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/multivariate-normal/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url>
   

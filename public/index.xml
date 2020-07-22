@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Completing the Square for a Multivariate Normal</title>
+      <link>/blog/completing-the-square-for-a-multivariate-normal/</link>
+      <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/completing-the-square-for-a-multivariate-normal/</guid>
+      <description>Consider the mixed effects model \[ Y | \gamma \sim N(X\beta + Z\gamma, \sigma^2 I_n) \] where \[ \gamma \sim N(0_q, \Sigma) \] The posterior distribution of the random effect \(\gamma | Y\) is multivariate normal. This means that the two quadratic forms in \(f(Y|\gamma)f(\gamma)\) have to be combined into one. This is a difficult algebra problem which involves an analogue for completing the square for matrices.
+The best resource I found for the multivariate case of completing the square is this article</description>
+    </item>
+    
+    <item>
       <title>Expected Value and Variance for Negative Binomial</title>
       <link>/blog/expected-value-and-variance-for-negative-binomial/</link>
       <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
