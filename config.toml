@@ -4,9 +4,9 @@
 theme = "hugo-theme-codex"
 
 # Override these settings with your own
-title = "codex"
+title = "Math Stats is Hard"
 languageCode = "en-us"
-baseURL = "https://example.org/"
+baseURL = "https://mathstatsishard.netlify.app/"
 copyright = "© {year}"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"] # added
 
